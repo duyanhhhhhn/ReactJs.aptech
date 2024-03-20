@@ -1,4 +1,4 @@
-import { faClose, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -38,11 +38,36 @@ const Products = () => {
       handleClose();
             
     }
+  //State : Keyword lưu từ khoá tìm kiếm 
+  const [keyword, setKeyword] = useState("");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    let result = dssp.filter(item => item.title.includes(keyword));
+    setDssp(result)
+  }
+  // State: total tính tổng giá tiền
+  const [total, setTotal] = useState();
+  const [maxprice, setMaxprice] = useState("");
+  useEffect(() => {
+    let tong = 0;
+    dssp.forEach(item => { tong += item.price;  if(item.price > maxprice){setMaxprice(item.price)}});
+    setTotal(tong);
+  })
+ 
+
   
   
   return (<>
     
-      <Container>
+    <Container>
+      <Form onSubmit={handleSearch}>
+        <Form.Control type="text " placeholder="Nhập vào thông tin tìm kiếm ... " onChange={(e) => setKeyword(e.target.value)}/>
+        <Button style={{margin : "15px 15px 15px 0"}} onClick={handleSearch}>
+          <FontAwesomeIcon icon={faSearch} /> Tìm kiếm
+        </Button>
+      </Form>
+      <p> Tổng giá tiền : {total} $</p>
+      <p>Giá tiền lớn nhất của sản phẩm :{maxprice}$</p>
         <Row>
              <Col md={3}>
                 <Form>
@@ -69,7 +94,7 @@ const Products = () => {
             </Form>
              </Col>
               <Col md={9}>
-              <h1> Danh sach san pham</h1>
+              <h1> Danh sách sản phẩm</h1>
                  <Table striped bordered hover>
               <thead>
               <tr>
