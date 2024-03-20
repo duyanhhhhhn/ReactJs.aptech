@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+       "name":" iphone 15 Pro Max ",
+       "price" :250000000,
+        "stock" :15
+    },  {
+        "id": 2,
+       "name":" SamSung galaxy ",
+       "price" :50000000,
+        "stock" :5
+    },  {
+        "id": 3,
+       "name":" ipad Pro M2 ",
+       "price" :45000000,
+        "stock" :8
+    },  {
+        "id": 4,
+       "name":" Oppo Find ",
+       "price" :25000000,
+        "stock" :7
+    }
+]
