@@ -1,4 +1,4 @@
-import { faCheck, faInfo, faPen, faPlus, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faInfo, faPen, faPlus, faSearch, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -60,7 +60,20 @@ const Post = () => {
 
     }
     }
-    return (<>
+    // State: Từ khoá tìm kiếm 
+  const [keyword, setKeyword] = useState();
+  const handleSearch = (e) => {
+    e.preventDefault();
+    let result = Posts.filter(item => item.title.includes(keyword));
+    setPosts(result)
+  }
+  return (<>
+    <Form>
+      <Form.Control type="text " placeholder="Nhập vào thông tin tìm kiếm ... " onChange={(e) => setKeyword(e.target.value)}/>
+        <Button style={{margin : "15px 15px 15px 0"}} onClick={handleSearch}>
+          <FontAwesomeIcon icon={faSearch} /> Tìm kiếm
+        </Button> 
+    </Form>
             <Button variant="success" style={{ marginBottom: '10px' }} onClick={() => { setMode(true); setNewPosts({}); HandleShowAddModal()}}>
           <FontAwesomeIcon icon={faPlus} /> Add Posts
         </Button>

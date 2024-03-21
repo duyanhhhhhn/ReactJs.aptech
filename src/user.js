@@ -60,30 +60,28 @@ const Users = () => {
         HandlecloseDeleteModal();
     })
   }
-  // Tìm kiếm tài khoản
-  const [searchInfo, setSearchInfo] = useState("");
- const handleFind = (e) => {
-  e.preventDefault();
-  if (!searchInfo.trim()) {
-  // Nếu không có thông tin tìm kiếm, hiển thị lại toàn bộ danh sách người dùng
-    axios.get("https://dummyjson.com/users").then((res) => setUser(res.data.users));
-  } else {
-    // Nếu có thông tin tìm kiếm, thực hiện tìm kiếm linh hoạt hơn
-    const searchTerm = searchInfo.toLowerCase(); // Chuyển đổi thông tin tìm kiếm và firstName về lowercase để so sánh không phân biệt hoa thường
-    const filteredUsers = user.filter((item) =>
-      item.firstName.toLowerCase().includes(searchTerm)
-    );
-    setUser(filteredUsers);
+  //State : Keyword lưu từ khoá tìm kiếm
+  // const [searchInfo, setSearchInfo] = useState("");
+
+  const [keyword, setKeyword] = useState("");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    let result = user.filter(item => (item.firstName + " " + item.lastName).includes(keyword));
+    setUser(result)
   }
-};
 
 
     return (
       <>
+        <Form >
+             <Form.Control type="text " placeholder="Nhập vào thông tin tìm kiếm ... " onChange={(e) => setKeyword(e.target.value)}/>
+        <Button style={{margin : "15px 15px 15px 0"}} onClick={handleSearch}>
+          <FontAwesomeIcon icon={faSearch} /> Tìm kiếm
+        </Button>
+        </Form>
         <Button variant="success" style={{ marginBottom: '10px' }} onClick={() => { setMode(true); setNewUser({}); HandleShowAddModal()}}>
           <FontAwesomeIcon icon={faPlus} /> Thêm user
         </Button>
-        <Button style={{ marginBottom: '10px', marginLeft: '10px' }} onClick={handleFind}><FontAwesomeIcon icon={faSearch} /></Button>
         <Table striped bordered hover>
             <thead>
                 <tr>
@@ -208,12 +206,6 @@ const Users = () => {
           </Button>
         </Modal.Footer>
         </Modal>
-     <Form onSubmit={handleFind}>
-  <Form.Group className="mb-3">
-    <Form.Control type="text" placeholder="Nhập thông tin tìm kiếm..." value={searchInfo} onChange={(e) => setSearchInfo(e.target.value)} />
-  </Form.Group>
-  <Button type="submit" variant="primary"><FontAwesomeIcon icon={faSearch} /></Button>
-</Form>
         </>
     )
 }

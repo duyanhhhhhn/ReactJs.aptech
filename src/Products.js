@@ -61,7 +61,6 @@ const Products = () => {
     setTotal(tong);
     setMaxprice(lonNhat);
   })
- 
 
   
   
