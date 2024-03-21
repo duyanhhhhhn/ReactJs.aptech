@@ -47,11 +47,19 @@ const Products = () => {
   }
   // State: total tính tổng giá tiền
   const [total, setTotal] = useState();
-  const [maxprice, setMaxprice] = useState("");
+  const [maxprice, setMaxprice] = useState();
   useEffect(() => {
     let tong = 0;
-    dssp.forEach(item => { tong += item.price;  if(item.price > maxprice){setMaxprice(item.price)}});
+    let lonNhat = 0;
+    dssp.forEach(item => {
+      tong += item.price;
+      // if (item.price > lonNhat)
+      // { lonNhat =item.price }
+      lonNhat = (item.price > lonNhat) ? item.price : lonNhat;
+      // lonNhat = Math.max(lonNhat, item.price);
+    });
     setTotal(tong);
+    setMaxprice(lonNhat);
   })
  
 
@@ -68,6 +76,7 @@ const Products = () => {
       </Form>
       <p> Tổng giá tiền : {total} $</p>
       <p>Giá tiền lớn nhất của sản phẩm :{maxprice}$</p>
+      <p>Tên sản phẩm có giá cao nhất</p>
         <Row>
              <Col md={3}>
                 <Form>
